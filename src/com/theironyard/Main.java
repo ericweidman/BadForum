@@ -27,12 +27,17 @@ public class Main {
                     }),
                 new MustacheTemplateEngine()
         );
+        Spark.post(
+                "/login",
+                ((request, response) -> {
+                    String name = request.queryParams("loginName");
+                    user = new User(name);
+                    response.redirect("/");
+                    return "";
 
+                })
 
-
-
-
-
+    );
     }
 }
 
