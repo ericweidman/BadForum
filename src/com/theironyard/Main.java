@@ -10,16 +10,7 @@ public class Main {
 
 
 
-//        Add the Spark and Mustache libraries in Project Structure.
 
-
-//        com.sparkjava:spark-core:2.3
-
-//        com.sparkjava:spark-template-mustache:2.3
-
-//        Create a resources folder in Project Structure and mark it with the "Resources" designation.
-
-//        Create a templates folder inside of it.
 
 //        Create resources/templates/index.html which looks like in the first screenshot below.
 
