@@ -10,8 +10,10 @@ public class User {
     String password;
     ArrayList<String> messages = new ArrayList<>();
 
-    public User(String name) {
+    public User(String name, String password) {
         this.name = name;
+        this.password = password;
+
     }
 }
 

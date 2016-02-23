@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class Main {
 
-    static User user;
+    static HashMap<String, User> users = new HashMap<>();
 
     public static void main(String[] args) {
         Spark.init();
@@ -17,6 +17,7 @@ public class Main {
         Spark.get(
                 "/",
                 ((request, response) -> {
+                    User user = getUserFromSession(request.session());
                     HashMap m = new HashMap();
                     if (user == null) {
                         return new ModelAndView(m, "index.html");
@@ -29,21 +30,30 @@ public class Main {
                 new MustacheTemplateEngine()
         );
         Spark.post(
-                "/index",
+                "/createUser",
                 ((request, response) -> {
                     String name = request.queryParams("loginName");
-                    if (!name.equals("")) {
-                        user = new User(name);
-                        response.redirect("/");
-                    } else {
-                        response.redirect("/");
+                    String pass = request.queryParams("userPass");
+                    User user = users.get(name);
+                    if (user == null) {
+                        user = new User(name, pass);
+                        users.put(name, user);
                     }
-                    return "";
+                    Session session = request.session();
+                    session.attribute("loginName", name);
+                    if(pass.equals(user.password)) {
+                        response.redirect("/");
+                    }else{
+                        Spark.halt(403);
+                    }
+                        return "";
+
                 })
         );
         Spark.post(
                 "/messages",
                 ((request, response) -> {
+                    User user = getUserFromSession(request.session());
                     String text = request.queryParams("userInput");
                     if (!text.equals("")) {
                         user.messages.add(text);
@@ -63,6 +73,34 @@ public class Main {
                     return "";
                 })
         );
+        Spark.post(
+                "/delete",
+                ((request, response) -> {
+                    User user = getUserFromSession(request.session());
+                    int number = Integer.valueOf(request.queryParams("userDelete"));
+                    user.messages.remove(number - 1);
+                    response.redirect("/");
+                    return "";
+                })
+
+        );
+        Spark.post(
+                "/edit",
+                ((request, response) -> {
+                    User user = getUserFromSession(request.session());
+                    int number = Integer.valueOf(request.queryParams("userSelectEdit"));
+                    user.messages.remove(number - 1);
+                    String editPut = request.queryParams("userEdit");
+                    user.messages.add(number - 1, editPut);
+                    response.redirect("/");
+                    return "";
+                })
+
+        );
+    }
+    static User getUserFromSession(Session session){
+        String name = session.attribute("loginName");
+        return users.get(name);
     }
 }
 
@@ -72,20 +110,20 @@ public class Main {
 //        and store the password in the User object. If the user does exists, check the password and,
 //        if it's wrong, don't let them log in (you can decide the details for yourself).
 
-//        Add multi-user support by storing your users in a HashMap<String, User>
-//        and putting your ArrayList<Message> inside the User object.
+//        +Add multi-user support by storing your users in a HashMap<String, User>
+//        +and putting your ArrayList<Message> inside the User object.
 
-//        In the /create-user route, save the username into the session.
+//        +In the /create-user route, save the username into the session.
 
-//        In the /route, get the username out of the session and subsequently get your User object.
+//        +In the /route, get the username out of the session and subsequently get your User object.
 
 //        +Show a logout button when the user is logged in. It should invalidate
 //        +the session and refresh the page so you can log in again with a new user.
 
-//        Add a form in messages.html which lets you delete a message by entering its number.
+//        +Add a form in messages.html which lets you delete a message by entering its number.
 
-//        Add a form in messages.html which lets you edit a message
-//        by entering its number and the text you want to replace it with.
+//        +Add a form in messages.html which lets you edit a message
+//        +by entering its number and the text you want to replace it with.
 
 
 //        Optional: Make the microblog persist data on the disk by encoding
