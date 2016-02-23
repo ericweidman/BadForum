@@ -1,14 +1,28 @@
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <body>
-<form action="/messages" method="post">
-    <input type="text" placeholder="Write a message." name="userInput"/>
-    <button type="submit">Create</button>
-</form>
-Messages created by {{name}}:
-<ol>
-    {{#messages}}
-    <li>{{message}}</li>
-    {{/messages}}
-</ol>
+<style>
+    ul li{
+    background: #D3D3D3;
+    margin: 5px;
+    }
+    .center {
+    margin: auto;
+    width: 60%;
+    border: 3px solid #000000;
+    padding: 10px;
+    }
+</style>
+<div class="center">
+    <form action="/messages" method="post">
+        <input type="text" placeholder="Write a message." name="userInput"/>
+        <button type="submit">Create</button>
+    </form>
+    Messages created by {{name}}:
+    <ul>
+        {{#messages}}
+        <li>{{message}}</li>
+        {{/messages}}
+    </ul>
+</div>
 </body>
 </html>
