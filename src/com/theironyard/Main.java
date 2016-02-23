@@ -3,6 +3,7 @@ package com.theironyard;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.mustache.MustacheTemplateEngine;
+
 import java.util.HashMap;
 
 public class Main {
@@ -12,14 +13,13 @@ public class Main {
     public static void main(String[] args) {
         Spark.init();
 
-
         Spark.get(
                 "/",
                 ((request, response) -> {
                     HashMap m = new HashMap();
-                    if(user == null) {
+                    if (user == null) {
                         return new ModelAndView(m, "index.html");
-                    }else {
+                    } else {
                         m.put("name", user.name);
                         m.put("messages", user.messages);
                         return new ModelAndView(m, "messages.html");
@@ -34,24 +34,24 @@ public class Main {
                     if (!name.equals("")) {
                         user = new User(name);
                         response.redirect("/");
-                    } else{
+                    } else {
                         response.redirect("/");
                     }
                     return "";
                 })
-    );
+        );
         Spark.post(
                 "/messages",
                 ((request, response) -> {
                     String text = request.queryParams("userInput");
-                    if(!text.equals("")) {
+                    if (!text.equals("")) {
                         Message message = new Message(text);
                         user.messages.add(message);
                         response.redirect("/");
-                    }else {
+                    } else {
                         response.redirect("/");
                     }
-                    return"";
+                    return "";
                 })
         );
 
