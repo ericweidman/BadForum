@@ -18,9 +18,9 @@ public class Main {
                 "/",
                 ((request, response) -> {
                     HashMap m = new HashMap();
-                    if(user == null) {
+                    if (user == null) {
                         return new ModelAndView(m, "index.html");
-                    }else {
+                    } else {
                         m.put("name", user.name);
                         m.put("messages", user.messages);
                         return new ModelAndView(m, "messages.html");
@@ -35,36 +35,38 @@ public class Main {
                     if (!name.equals("")) {
                         user = new User(name);
                         response.redirect("/");
-                    } else{
+                    } else {
                         response.redirect("/");
                     }
                     return "";
                 })
-    );
+        );
         Spark.post(
                 "/messages",
                 ((request, response) -> {
                     String text = request.queryParams("userInput");
-                    if(!text.equals("")) {
+                    if (!text.equals("")) {
                         Message message = new Message(text);
                         user.messages.add(message);
                         response.redirect("/");
-                    }else {
+                    } else {
                         response.redirect("/");
                     }
-                    return"";
+                    return "";
                 })
         );
         Spark.post(
                 "/logout",
-                (request, response) -> {
+                ((request, response) -> {
                     Session session = request.session();
                     session.invalidate();
                     response.redirect("/");
                     return "";
-                });
+                })
+        );
     }
 }
+
 //
 //
 //        Add a password field to the login form. If the user doesn't exist, create a new user
