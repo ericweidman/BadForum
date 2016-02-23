@@ -46,8 +46,7 @@ public class Main {
                 ((request, response) -> {
                     String text = request.queryParams("userInput");
                     if (!text.equals("")) {
-                        Message message = new Message(text);
-                        user.messages.add(message);
+                        user.messages.add(text);
                         response.redirect("/");
                     } else {
                         response.redirect("/");
