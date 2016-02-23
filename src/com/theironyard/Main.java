@@ -77,10 +77,10 @@ public class Main {
 
 //        In the /create-user route, save the username into the session.
 
-//        In the / route, get the username out of the session and subsequently get your User object.
+//        In the /route, get the username out of the session and subsequently get your User object.
 
-//        Show a logout button when the user is logged in. It should invalidate
-//        the session and refresh the page so you can log in again with a new user.
+//        +Show a logout button when the user is logged in. It should invalidate
+//        +the session and refresh the page so you can log in again with a new user.
 
 //        Add a form in messages.html which lets you delete a message by entering its number.
 

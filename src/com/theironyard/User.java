@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 public class User {
     String name;
+    String password;
     ArrayList<String> messages = new ArrayList<>();
 
     public User(String name) {
