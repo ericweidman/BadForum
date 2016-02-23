@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class User {
     String name;
-    ArrayList messages = new ArrayList<>();
+    ArrayList<String> messages = new ArrayList<>();
 
     public User(String name) {
         this.name = name;
