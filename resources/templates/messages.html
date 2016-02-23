@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/html">
 <body>
 <style>
-    ul li{
+    ol li{
     background: #D3D3D3;
     margin: 5px;
     }
@@ -18,11 +18,11 @@
         <button type="submit">Create</button>
     </form>
     Messages created by {{name}}:
-    <ul>
+    <ol>
         {{#messages}}
-        <li>{{message}}</li>
+        <li><span>{{message}}</span></li>
         {{/messages}}
-    </ul>
+    </ol>
 </div>
 </body>
 </html>
