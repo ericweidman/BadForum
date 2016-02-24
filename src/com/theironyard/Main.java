@@ -13,7 +13,6 @@ public class Main {
     public static void main(String[] args) {
         Spark.init();
 
-
         Spark.get(
                 "/",
                 ((request, response) -> {
@@ -38,15 +37,17 @@ public class Main {
                     if (user == null) {
                         user = new User(name, pass);
                         users.put(name, user);
-                    }
-                    Session session = request.session();
-                    session.attribute("loginName", name);
-                    if(pass.equals(user.password)) {
+                        Session session = request.session();
+                        session.attribute("loginName", name);
                         response.redirect("/");
-                    }else{
+                    } else if (pass.equals(user.password)) {
+                        response.redirect("/");
+                        Session session = request.session();
+                        session.attribute("loginName", name);
+                    } else {
                         Spark.halt(403);
                     }
-                        return "";
+                    return "";
 
                 })
         );
@@ -98,7 +99,7 @@ public class Main {
 
         );
     }
-    static User getUserFromSession(Session session){
+    static User getUserFromSession(Session session) {
         String name = session.attribute("loginName");
         return users.get(name);
     }
